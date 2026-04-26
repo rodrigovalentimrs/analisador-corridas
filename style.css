@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #2c2118; /* marrom escuro */
+    color: #f1e9e0; /* bege claro */
+}
+
+.container {
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #f1e9e0;
+}
+
+h2 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #cbb8a6; /* bege médio */
+}
+
+.box {
+    background: #3a2b21; /* marrom médio */
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #4a382c;
+}
+
+label {
+    font-size: 13px;
+    margin-top: 10px;
+    display: block;
+    color: #d8c7b6;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #5a4638;
+    font-size: 14px;
+    background: #2a1f17;
+    color: #f1e9e0;
+}
+
+input:focus {
+    outline: none;
+    border-color: #a1866f;
+    background: #241a13;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #6b4f3b; /* marrom principal */
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #5a4231;
+}
+
+/* CARD */
+.card {
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #4a382c;
+    background: #2a1f17;
+    text-align: center;
+}
+
+.card p {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* STATUS (sutil e elegante) */
+.card.boa {
+    border-left: 4px solid #7a9e7e;
+}
+
+.card.aceitável {
+    border-left: 4px solid #c2a878;
+}
+
+.card.ruim {
+    border-left: 4px solid #b06a5f;
+}
