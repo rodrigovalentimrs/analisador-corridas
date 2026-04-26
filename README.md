@@ -30,7 +30,6 @@ O sistema calcula automaticamente os indicadores e exibe o resultado.
 
 ## Preview
 
-(adicione aqui uma imagem do projeto)
 
 ```id="preview-img"
 ![Preview do projeto](./screenshot.png)
