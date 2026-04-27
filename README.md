@@ -31,9 +31,9 @@ O sistema calcula automaticamente os indicadores e exibe o resultado.
 ## Preview
 
 
-```id="preview-img"
-![Preview do projeto](./screenshot.png)
-```
+<p align="center">
+  <img src="./screenshot.png" alt="Preview do projeto" width="600">
+</p>
 
 ---
 
