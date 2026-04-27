@@ -1,50 +1,134 @@
-const btn = document.querySelector("#btnAnalisador");
+iniciarApp();
 
-btn.addEventListener("click", analisarCorrida);
+/* =========================
+   INICIALIZAÇÃO
+   ========================= */
+function iniciarApp() {
+    const btn = document.querySelector("#btnAnalisador");
+    btn.addEventListener("click", analisarCorrida);
+}
 
-function analisarCorrida(){
+/* =========================
+   FLUXO PRINCIPAL
+   ========================= */
+function analisarCorrida() {
+    const dados = obterDados();
 
-    const km = Number(document.querySelector("#km").value);
-    const tempo = Number(document.querySelector("#tempo").value);
-    const valor = Number(document.querySelector("#valor").value);
+    if (!validarDados(dados)) return;
 
-    const resultado = document.querySelector("#resultado");
-    resultado.innerHTML = "";
+    const calculo = calcularCorrida(dados);
+    const status = classificarCorrida(calculo);
 
-    // validação
-    if (km <= 0 || tempo <= 0 || valor <= 0) {
-        resultado.innerHTML = "<p>Preencha os dados corretamente.</p>";
-        return;
+    renderizarResultado(calculo, dados, status);
+}
+
+/* =========================
+        ENTRADA DE DADOS
+   ========================= */
+function obterDados() {
+    return {
+        distanciaKm: Number(document.querySelector("#distanciaKm").value),
+        tempoMinutos: Number(document.querySelector("#tempoMinutos").value),
+        valorCorrida: Number(document.querySelector("#valorCorrida").value)
+    };
+}
+
+/* =========================
+        VALIDAÇÃO
+   ========================= */
+function validarDados({ distanciaKm, tempoMinutos, valorCorrida }) {
+    const resultadoElement = document.querySelector("#resultado");
+
+    if (!distanciaKm || !tempoMinutos || !valorCorrida) {
+        resultadoElement.textContent = "Preencha todos os campos corretamente.";
+        return false;
     }
 
-    // cálculos
-    const valorPorKm = valor / km;
-    const valorPorHora = valor / (tempo / 60);
+    if (distanciaKm <= 0 || tempoMinutos <= 0 || valorCorrida <= 0) {
+        resultadoElement.textContent = "Os valores devem ser maiores que zero.";
+        return false;
+    }
 
-    // parâmetros internos (ajuste aqui se quiser)
+    return true;
+}
+
+/* =========================
+        CÁLCULOS
+   ========================= */
+function calcularCorrida(dados) {
+    return {
+        valorPorKm: dados.valorCorrida / dados.distanciaKm,
+        valorPorHora: dados.valorCorrida / (dados.tempoMinutos / 60)
+    };
+}
+
+/* =========================
+        REGRAS DE NEGÓCIO
+   ========================= */
+function classificarCorrida(calculo) {
     const minKm = 1.7;
     const minHora = 30;
 
-    // decisão
-    let status = "";
-
-    if (valorPorKm >= minKm && valorPorHora >= minHora) {
-        status = "BOA";
-    } else if (valorPorKm >= minKm || valorPorHora >= minHora) {
-        status = "ACEITÁVEL";
-    } else {
-        status = "RUIM";
+    if (calculo.valorPorKm >= minKm && calculo.valorPorHora >= minHora) {
+        return "boa";
     }
 
-    // card
+    if (calculo.valorPorKm >= minKm || calculo.valorPorHora >= minHora) {
+        return "aceitavel";
+    }
+
+    return "ruim";
+}
+
+/* =========================
+        FORMATAÇÃO
+   ========================= */
+function formatarMoeda(valor) {
+    return new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    }).format(valor);
+}
+
+function formatarKm(km) {
+    return `${km.toFixed(2)} km`;
+}
+
+function formatarTempo(minutos) {
+    const horas = Math.floor(minutos / 60);
+    const min = minutos % 60;
+
+    return horas > 0
+        ? `${horas}h ${min}min`
+        : `${min}min`;
+}
+
+/* =========================
+        INTERFACE (DOM)
+   ========================= */
+function renderizarResultado(calculo, dados, status) {
+    const resultadoElement = document.querySelector("#resultado");
+
+    resultadoElement.innerHTML = "";
+
     const card = document.createElement("div");
-    card.className = `card ${status.toLowerCase()}`;
+    card.classList.add("card", status);
 
-    card.innerHTML = `
-        <p><strong>${status}</strong></p>
-        <p>R$/km: ${valorPorKm.toFixed(2)}</p>
-        <p>R$/hora: ${valorPorHora.toFixed(2)}</p>
-    `;
+    const titulo = document.createElement("p");
+    titulo.innerHTML = `<strong>${status.toUpperCase()}</strong>`;
 
-    resultado.appendChild(card);
+    const km = document.createElement("p");
+    km.textContent = `R$/km: ${formatarMoeda(calculo.valorPorKm)}`;
+
+    const hora = document.createElement("p");
+    hora.textContent = `R$/hora: ${formatarMoeda(calculo.valorPorHora)}`;
+
+    const tempo = document.createElement("p");
+    tempo.textContent = `Tempo: ${formatarTempo(dados.tempoMinutos)}`;
+
+    const distancia = document.createElement("p");
+    distancia.textContent = `Distância: ${formatarKm(dados.distanciaKm)}`;
+
+    card.append(titulo, km, hora, tempo, distancia);
+    resultadoElement.appendChild(card);
 }

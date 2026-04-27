@@ -4,37 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisador de Corridas</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <main class="container">
+<main class="container">
 
-        <h1>Analisador</h1>
+    <h1>Analisador de Corridas</h1>
 
-        <section class="box">
-            <h2>Corrida</h2>
+    <section class="box">
+        <h2>Corrida</h2>
 
-            <label>Km</label>
-            <input type="number" id="km" placeholder="Ex: 10">
+        <label>Distância (km):</label>
+        <input type="number" id="distanciaKm" placeholder="Ex: 10">
 
-            <label>Tempo (min)</label>
-            <input type="number" id="tempo" placeholder="Ex: 20">
+        <label>Tempo (min):</label>
+        <input type="number" id="tempoMinutos" placeholder="Ex: 30">
 
-            <label>Valor (R$)</label>
-            <input type="number" id="valor" placeholder="Ex: 25">
-        </section>
+        <label>Valor (R$):</label>
+        <input type="number" id="valorCorrida" placeholder="Ex: 25">
+    </section>
 
-        <button id="btnAnalisador">Analisar</button>
+    <button id="btnAnalisador">Analisar</button>
 
-        <section class="box">
-            <h2>Resultado</h2>
-            <div id="resultado"></div>
-        </section>
+    <section class="box">
+        <h2>Resultado</h2>
+        <div id="resultado"></div>
+    </section>
 
-    </main>
+</main>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
