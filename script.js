@@ -23,7 +23,7 @@ function analisarCorrida() {
 }
 
 /* =========================
-        ENTRADA DE DADOS
+   ENTRADA DE DADOS
    ========================= */
 function obterDados() {
     return {
@@ -34,18 +34,17 @@ function obterDados() {
 }
 
 /* =========================
-        VALIDAÇÃO
+   VALIDAÇÃO
    ========================= */
 function validarDados({ distanciaKm, tempoMinutos, valorCorrida }) {
     const resultadoElement = document.querySelector("#resultado");
 
-    if (!distanciaKm || !tempoMinutos || !valorCorrida) {
-        resultadoElement.textContent = "Preencha todos os campos corretamente.";
-        return false;
-    }
+    const valores = [distanciaKm, tempoMinutos, valorCorrida];
 
-    if (distanciaKm <= 0 || tempoMinutos <= 0 || valorCorrida <= 0) {
-        resultadoElement.textContent = "Os valores devem ser maiores que zero.";
+    const temErro = valores.some(valor => isNaN(valor) || valor <= 0);
+
+    if (temErro) {
+        resultadoElement.textContent = "Preencha os campos corretamente com valores válidos e maiores que zero";
         return false;
     }
 
@@ -53,27 +52,39 @@ function validarDados({ distanciaKm, tempoMinutos, valorCorrida }) {
 }
 
 /* =========================
-        CÁLCULOS
+   CÁLCULOS
    ========================= */
 function calcularCorrida(dados) {
+    const { distanciaKm, tempoMinutos, valorCorrida } = dados;
+
     return {
-        valorPorKm: dados.valorCorrida / dados.distanciaKm,
-        valorPorHora: dados.valorCorrida / (dados.tempoMinutos / 60)
+        valorPorKm: valorCorrida / distanciaKm,
+        valorPorHora: valorCorrida / (tempoMinutos / 60)
     };
 }
 
 /* =========================
-        REGRAS DE NEGÓCIO
+   REGRAS DE NEGÓCIO
    ========================= */
 function classificarCorrida(calculo) {
-    const minKm = 1.7;
-    const minHora = 30;
+    const regras = {
+        boa: {
+            km: 2.0,
+            hora: 40
+        },
+        aceitavel: {
+            km: 1.7,
+            hora: 30
+        }
+    };
 
-    if (calculo.valorPorKm >= minKm && calculo.valorPorHora >= minHora) {
+    const { valorPorKm, valorPorHora } = calculo;
+
+    if (valorPorKm >= regras.boa.km && valorPorHora >= regras.boa.hora) {
         return "boa";
     }
 
-    if (calculo.valorPorKm >= minKm || calculo.valorPorHora >= minHora) {
+    if (valorPorKm >= regras.aceitavel.km && valorPorHora >= regras.aceitavel.hora) {
         return "aceitavel";
     }
 
@@ -81,7 +92,7 @@ function classificarCorrida(calculo) {
 }
 
 /* =========================
-        FORMATAÇÃO
+   FORMATAÇÃO
    ========================= */
 function formatarMoeda(valor) {
     return new Intl.NumberFormat("pt-BR", {
@@ -91,7 +102,7 @@ function formatarMoeda(valor) {
 }
 
 function formatarKm(km) {
-    return `${km.toFixed(2)} km`;
+    return `${Number(km).toFixed(2)} km`;
 }
 
 function formatarTempo(minutos) {
@@ -104,7 +115,7 @@ function formatarTempo(minutos) {
 }
 
 /* =========================
-        INTERFACE (DOM)
+   INTERFACE (DOM)
    ========================= */
 function renderizarResultado(calculo, dados, status) {
     const resultadoElement = document.querySelector("#resultado");
@@ -115,7 +126,9 @@ function renderizarResultado(calculo, dados, status) {
     card.classList.add("card", status);
 
     const titulo = document.createElement("p");
-    titulo.innerHTML = `<strong>${status.toUpperCase()}</strong>`;
+    const strong = document.createElement("strong");
+    strong.textContent = status.toUpperCase();
+    titulo.appendChild(strong);
 
     const km = document.createElement("p");
     km.textContent = `R$/km: ${formatarMoeda(calculo.valorPorKm)}`;
@@ -131,4 +144,4 @@ function renderizarResultado(calculo, dados, status) {
 
     card.append(titulo, km, hora, tempo, distancia);
     resultadoElement.appendChild(card);
-}
+}   
