@@ -65,8 +65,6 @@ Classificação:
 * ACEITÁVEL → atende um dos critérios
 * RUIM → não atende nenhum
 
-(Esses valores ainda são fixos e poderão ser configuráveis no futuro.)
-
 ---
 
 ## Próximos Passos
