@@ -46,7 +46,7 @@ O sistema calcula automaticamente os indicadores e exibe o resultado.
 ## Como Executar
 
 ```bash id="run-project"
-git clone https://github.com/seu-usuario/analisador-de-corridas.git
+git clone https://github.com/rodrigovalentimrs/analisador-corridas
 cd analisador-de-corridas
 ```
 
