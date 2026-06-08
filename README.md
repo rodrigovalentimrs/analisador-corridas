@@ -2,7 +2,7 @@
 
 Aplicação web simples para ajudar motoristas de aplicativo a analisarem rapidamente se uma corrida vale a pena.
 
-
+---
 
 ## Ideia
 
