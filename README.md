@@ -2,9 +2,7 @@
 
 Aplicação web simples para ajudar motoristas de aplicativo a analisarem rapidamente se uma corrida vale a pena.
 
-Este projeto está em fase inicial (MVP) e será evoluído com novas funcionalidades.
 
----
 
 ## Ideia
 
